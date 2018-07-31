@@ -1,10 +1,9 @@
-var _functions = {};
 
 module.exports = function pipeSeq(sequencer) {
+    var _functions = {};
     var scope = this;
-    scope._args = Array.from(arguments);
-    _functions = {};
-    scope._sequencer = sequencer.apply(scope, scope._args.filter(function(a, i) { return i > 0 }));
+    scope._args = Array.prototype.slice.call(arguments, 1);
+    scope._sequencer = sequencer.apply(scope, scope._args);
     
     scope._accumulate = function(value) {
         return function () {
@@ -19,7 +18,7 @@ module.exports = function pipeSeq(sequencer) {
     }
 
     scope.pipeline = function(accumulator) {
-        const args = Array.from(arguments).filter(function (a, i) { return i > 0 });
+        const args = Array.prototype.slice.call(arguments, 1);
         if (typeof accumulator === 'function') {
             var index = Object.keys(_functions).length;
             _functions[String(index) + '_' + accumulator.name] = accumulator.call(undefined, args);
@@ -30,12 +29,20 @@ module.exports = function pipeSeq(sequencer) {
     };
 
     scope.invoke = function() {
-
         return function() {
-
             return scope._accumulate(scope._sequencer);
         }
+    };
 
+    scope.addLimit = function(limiter) {
+        const args = Array.prototype.slice.call(arguments, 1);
+        if (typeof limiter === 'function') {
+            var index = Object.keys(_functions).length;
+            _functions[String(index) + '_' + limiter.name] = limiter.call(undefined, args);
+        } else {
+            throw new Error('Limiter must be function!');
+        }
+        return scope;
     };
 
     return scope;
