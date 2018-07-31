@@ -1,11 +1,3 @@
-function sumAccumulator() {
-    var sum = 0;
-    return function(value) {
-      sum += value;
-      return sum;
-    };
-}
-
 const _functions = {};
 
 module.exports = function pipeSeq(sequencer) {
@@ -17,8 +9,10 @@ module.exports = function pipeSeq(sequencer) {
     scope._accumulate = function(value) {
         return function () {
             var val = value();
-            Object.keys(_functions).map(key => {
-                val = _functions[key](val);
+            Object.keys(_functions).map(function (key) {
+                if (typeof _functions[key] !== typeof undefined) {
+                    val = _functions[key](val);
+                }
             });
             return val;
         };
