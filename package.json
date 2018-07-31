@@ -1,0 +1,23 @@
+{
+  "name": "js-es5-generators",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "exec": "node src/index.js",
+    "test": "mocha tests/**/*.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vygandas/js-es5-generators.git"
+  },
+  "author": "Vygandas Pliasas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vygandas/js-es5-generators/issues"
+  },
+  "homepage": "https://github.com/vygandas/js-es5-generators#readme",
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}
