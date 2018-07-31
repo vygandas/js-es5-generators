@@ -19,9 +19,10 @@ module.exports = function pipeSeq(sequencer) {
     }
 
     scope.pipeline = function(accumulator) {
-        if (typeof accumulator === 'function') { 
+        const args = Array.from(arguments).filter(function (a, i) { return i > 0 });
+        if (typeof accumulator === 'function') {
             var index = Object.keys(_functions).length;
-            _functions[String(index) + '_' + accumulator.name] = accumulator();
+            _functions[String(index) + '_' + accumulator.name] = accumulator.call(undefined, args);
         } else {
             throw new Error('Accumulator must be function!');
         }
