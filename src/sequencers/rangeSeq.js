@@ -4,13 +4,13 @@ function rangeSeqCalc(start, step) {
 
 module.exports = function rangeSeq() {
     // Validate and set start and step parameters
-    var start = (typeof this.arguments !== typeof undefined
-        && typeof this.arguments[1] !== typeof undefined)
-            ? this.arguments[1]
+    var start = (typeof arguments !== typeof undefined
+        && typeof arguments[1] !== typeof undefined)
+            ? arguments[1]
             : 0;
-    const step = (typeof this.arguments !== typeof undefined
-        && typeof this.arguments[2] !== typeof undefined)
-            ? this.arguments[2]
+    const step = (typeof arguments !== typeof undefined
+        && typeof arguments[2] !== typeof undefined)
+            ? arguments[2]
             : 1;
     // Helper variables
     var timesCalledCount = 0;

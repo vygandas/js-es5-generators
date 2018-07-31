@@ -1,7 +1,6 @@
 module.exports = function generator(sequencer) {
-    this.arguments = arguments;
-    const s = sequencer.bind(this);
+    const s = sequencer.apply(this, arguments);
     return {
-        next: s()
+        next: sequencer.apply(this, arguments)
     };
 }
