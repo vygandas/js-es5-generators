@@ -47,4 +47,16 @@ describe('Generator with pipe and limiter', () => {
         assert.throws(function () { seq.next() }, Error, "Error thrown");
     });
 
+    it('should be correct with partialSumSeq 1, 3, 7, 2, 0', () => {
+        var pipedSeq = pipeSeq(partialSumSeq, 1, 3, 7, 2, 0) 
+        .addLimit(resultLimiter, 1) 
+        .addLimit(stepLimiter, 3)
+        .invoke();
+        var seq = generator(pipedSeq);
+        
+        assert.equal(seq.next(), 1);
+        assert.throws(function () { seq.next() }, Error, "Error thrown");
+        assert.throws(function () { seq.next() }, Error, "Error thrown");
+        assert.throws(function () { seq.next() }, Error, "Error thrown");
+    });
 });
