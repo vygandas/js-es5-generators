@@ -4,7 +4,7 @@ module.exports = function pipeSeq(sequencer) {
     var scope = this;
     scope._args = Array.from(arguments);
     _functions = {};
-    scope._sequencer = sequencer.apply(scope, scope._args);
+    scope._sequencer = sequencer.apply(scope, scope._args.filter(function(a, i) { return i > 0 }));
     
     scope._accumulate = function(value) {
         return function () {

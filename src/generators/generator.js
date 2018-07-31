@@ -1,6 +1,5 @@
 module.exports = function generator(sequencer) {
-    const s = sequencer.apply(this, arguments);
     return {
-        next: sequencer.apply(this, arguments)
+        next: sequencer.apply(this, Array.from(arguments).filter(function(a, i) { return i > 0 }))
     };
 }

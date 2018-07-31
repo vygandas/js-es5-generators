@@ -1,5 +1,5 @@
 module.exports = function partialSumSeq() {
-    const numbers = Array.from(arguments).filter((name, i) => i > 0);
+    const numbers = Array.from(arguments);
     var sum = 0;
     var paramIndex = 0;
     return function() {

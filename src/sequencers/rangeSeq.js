@@ -2,25 +2,16 @@ function rangeSeqCalc(_start, _step) {
     return _start + _step;
 }
 
-module.exports = function rangeSeq() {
-    // Validate and set _start and _step parameters
-    var _start = (typeof arguments !== typeof undefined
-        && typeof arguments[1] !== typeof undefined)
-            ? arguments[1]
-            : 0;
-    const _step = (typeof arguments !== typeof undefined
-        && typeof arguments[2] !== typeof undefined)
-            ? arguments[2]
-            : 1;
+module.exports = function rangeSeq(start, step) {
     // Helper variables
     var timesCalledCount = 0;
-    var pos = _start;
+    var pos = start;
 
     return function() {
         // First time return initial value
-        if (timesCalledCount++ === 0) return _start;
+        if (timesCalledCount++ === 0) return start;
         
-        pos = rangeSeqCalc(pos, _step);        
+        pos = rangeSeqCalc(pos, step);        
         return pos;
     }
 }
