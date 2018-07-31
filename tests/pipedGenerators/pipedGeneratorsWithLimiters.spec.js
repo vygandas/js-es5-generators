@@ -19,6 +19,7 @@ const isEven = require('../../src/accumulators/isEven');
 const incrementBy = require('../../src/accumulators/incrementBy');
 
 const stepLimiter = require('../../src/limiters/stepLimiter');
+const resultLimiter = require('../../src/limiters/resultLimiter');
 
 describe('Generator with pipe and limiter', () => {
 
@@ -29,6 +30,20 @@ describe('Generator with pipe and limiter', () => {
         var seq = generator(pipedSeq);
         assert.equal(seq.next(), 2);
         assert.equal(seq.next(), 3);
+        assert.throws(function () { seq.next() }, Error, "Error thrown");
+        assert.throws(function () { seq.next() }, Error, "Error thrown");
+    });
+
+    it('should be correct with primeSeq, resultLimiter and stepLimiter', () => {
+        var pipedSeq = pipeSeq(primeSeq) 
+            .addLimit(stepLimiter, 5)
+            .addLimit(resultLimiter, 5)
+            .invoke();
+        var seq = generator(pipedSeq);
+        assert.equal(seq.next(), 2);
+        assert.equal(seq.next(), 3);
+        assert.equal(seq.next(), 5);
+        assert.throws(function () { seq.next() }, Error, "Error thrown");
         assert.throws(function () { seq.next() }, Error, "Error thrown");
     });
 
