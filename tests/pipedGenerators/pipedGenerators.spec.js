@@ -16,6 +16,7 @@ const partialSumSeq = require('../../src/sequencers/partialSumSeq');
 
 const sumAccumulator = require('../../src/accumulators/sumAccumulator');
 const isEven = require('../../src/accumulators/isEven');
+const incrementBy = require('../../src/accumulators/incrementBy');
 
 describe('Generator with pipe', () => {
 
@@ -40,6 +41,19 @@ describe('Generator with pipe', () => {
         assert.equal(seq.next(), 4);
         assert.equal(seq.next(), 10);
         assert.equal(seq.next(), 34);
+    });
+    
+    it('should generate correct accumulated values when using factorialSeq sequence and additional incrementBy accumulator', () => {
+        var pipedSeq = pipeSeq(factorialSeq) // 1, 1, 2, 6, 24
+            .pipeline(sumAccumulator) // 1, 2 (1+1), 4(2+2), 10(4+6), 34(10+24)
+            .pipeline(incrementBy, 2)
+            .invoke();
+        var seq = generator(pipedSeq);
+        assert.equal(seq.next(), 3);
+        assert.equal(seq.next(), 4);
+        assert.equal(seq.next(), 6);
+        assert.equal(seq.next(), 12);
+        assert.equal(seq.next(), 36);
     });
 
     it('should generate accumulated values and check if they are even or not', () => {
