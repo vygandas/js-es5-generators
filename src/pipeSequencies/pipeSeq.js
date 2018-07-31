@@ -1,9 +1,8 @@
-
 module.exports = function pipeSeq(sequencer) {
     var _functions = {};
     var scope = this;
     scope._args = Array.prototype.slice.call(arguments, 1);
-    scope._sequencer = sequencer.apply(scope, scope._args);
+    scope._sequencer = sequencer.apply(undefined, scope._args);
     
     scope._accumulate = function(value) {
         return function () {
