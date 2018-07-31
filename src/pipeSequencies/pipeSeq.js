@@ -1,9 +1,9 @@
-const _functions = {};
+var _functions = {};
 
 module.exports = function pipeSeq(sequencer) {
     var scope = this;
     scope._args = Array.from(arguments);
-
+    _functions = {};
     scope._sequencer = sequencer.apply(scope, scope._args);
     
     scope._accumulate = function(value) {
